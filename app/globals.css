@@ -1,62 +1,11 @@
-*{
-    background-color:#B3B3B3
-}
-
-.upper-box{
-    height:200px;
-    width:300px;
-    border:1px black solid;
-    text-align: center;
+.contant_box{
+    border:solid 2px black;
+    height:800px;
+    width:700px;
     margin:auto;
 }
-.lower_box{
-    height:223px;
-    width:300px;
-    border:1px black solid;
-    text-align: center;
-    margin:auto;
-}
-.red_button{
-    height:110px;
-    width:147px;
-    border:1px black solid;
-    float:left;
-    
-    background-color:red;
-}
-.green_button{
-    height:110px;
-    width:149px;
-    border:1px black solid;
-    float:left;
-    background-color:green;
-}
-.blue_button{
-    height:110px;
-    width:149px;
-    border:1px black solid;
-    float:right;
-    background-color:blue;
-}
-.yellow_button{
-    height:110px;
-    width:147px;
-    border:1px black solid;
-    float:left;
-    background-color:yellow;
-}
-.color_show{
-    height:110px;
-    width:149px;
-    border:1px black solid;
-    float:right;
-    margin-right:67px;
-}
-button{
-    height:24px;
-    width:104px;
-    margin-top:50px;
-}
-p{
-    background-color:red;
+.userInput{
+    height:20px;
+    width:400px;
+    margin-left:150px;
 }
