@@ -1,3 +1,4 @@
+
 import Input_box from './input_box.js'
 const Page=function(){
     return(
@@ -8,4 +9,5 @@ const Page=function(){
         </>
     );
 };
+
 export default Page;

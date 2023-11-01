@@ -1,13 +1,16 @@
 const Input_box=function(){
     return(
         <>
-            <div className='contant_box'>
-                 <input type="text" className="userInput" placeholder="task:-"/>
-                 <input type="text" className="userInput" placeholder="time:-"/>
-                 <input type="text" className="userInput" placeholder="priority:-"/>
-          
+            <div className="container">
+                <div className="header">Task Master</div>
+                <input type="text" placeholder="Add Activity" />
+                <button >Add</button>
+                <p className="List-heading">Here is your list : {")"}</p>
+    
+
             </div>
         </>
+        
     );
 };
 export default Input_box;
