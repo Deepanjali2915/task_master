@@ -42,10 +42,10 @@ const Input_box=function(){
                     <button onClick={workTime}>Add</button>
                 </div>
                     <p className="List-heading">Here is your list : {")"}</p>
-                    {listData !==[] && listData.map((data,i)=>{
+                    {listData !=[] && listData.map((data,i)=>{
                         return(  
                             <div key={i}
-                                className="listData" >{data.work} - {data.time} - {data.mp}
+                                className="listData" >{data.work} - {data.time} - {data.imp}
                             </div>
                            
                           
