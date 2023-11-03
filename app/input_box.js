@@ -14,48 +14,51 @@ const Input_box=function(){
 
     const [work, setWork] = useState('');
     const [time, setTime]= useState('');
-    const [imp,setImp] =useState('1');	
+    const [imp,setImp] =useState('');	
     const [listData,setlistData] =useState([]);
     function workTime(){ 
       
-        //setlistData([...listData,work,time,imp])
-        //console.log(listData)
-        setlistData((listData)=>{
-            const updatedList =[...listData,work,time,imp]
-            console.log(updatedList)
-            setWork('')
-            setTime('')
-            setImp('')
-            return updatedList
-        })
+        setlistData([...listData,{"work":work,"time":time,"imp":imp}])
+            setWork("");
+            setTime("");
+            setImp("");
     }
+    
+    console.log(listData,"data")
     return(
-        <>
-            <div className="container">
-                <div className="header">Task Master</div>
-                    <input type="text" placeholder="Work" value={work} onChange={(e)=>setWork(e.target.value)} /> 
-                    
-                    <input type="text" placeholder="Take time" value={time} onChange={(e)=>setTime(e.target.value)} />
-                    
-                    < Priority options={options} value={imp} onChange={(selectedValue) => setImp(selectedValue)} />
-                    
-                <div className="header"> 
-                    <button onClick={workTime}>Add</button>
-                </div>
-                    <p className="List-heading">Here is your list : {")"}</p>
-                    {listData.length !==0 && listData.map((data,i)=>{
-                        return(  
-                            <div key={i}
-                                className="listData" >{data.work} - {data.time} - {data.imp}
-                            </div>
-                           
-                          
-                        )
-                    })}
-            </div>
- 
-        </>
-        
+      
+        <div className="container">
+            <div className="header">Task Master</div>
+                <input type="text" placeholder="Work" value={work} onChange={(e)=>setWork(e.target.value)} /> 
+                
+                <input type="text" placeholder="Take time" value={time} onChange={(e)=>setTime(e.target.value)} />
+                
+                < Priority options={options} value={imp} onChange={(selectedValue) => setImp(selectedValue)} />
+                
+          <div className="header"> 
+                <button onClick={workTime}>Add</button>
+          </div>
+          <p className="List-heading">Here is your list : {")"}</p>  
+            <table className="listData">
+              <thead>
+                <tr>
+                  <th>Work</th>
+                  <th>Time</th>
+                  <th>Priority</th>
+                </tr>
+              </thead>
+              <tbody>
+                {listData.map((task, index) => (
+                  <tr key={index}>
+                    <td>{task.work}</td>
+                    <td>{task.time}</td>
+                    <td>{task.imp}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+        </div>
+                
     );
 };
 export default Input_box;
