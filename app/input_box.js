@@ -25,6 +25,16 @@ const Input_box=function(){
     }
     
     console.log(listData,"data")
+    function deleteActivity(index){
+        const updatedlistData=listData.filter((elem,id) => {
+            return index!=id;
+        })
+        setlistData(updatedlistData);
+    }
+    
+    
+    
+    
     return(
       
         <div className="container">
@@ -53,6 +63,8 @@ const Input_box=function(){
                     <td>{task.work}</td>
                     <td>{task.time}</td>
                     <td>{task.imp}</td>
+                    <button>Done</button>
+                    <button onClick={()=>deleteActivity(index)} >Delete</button>
                   </tr>
                 ))}
               </tbody>
