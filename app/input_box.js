@@ -38,7 +38,7 @@ const Input_box=function(){
         })
         setlistData(donelistData);
     
-    
+      }
     
     
     return(
@@ -66,9 +66,9 @@ const Input_box=function(){
               <tbody>
                 {listData.map((task, index) => (
                   <tr key={index}>
-                    <td>{task.work}</td>
-                    <td>{task.time}</td>
-                    <td>{task.imp}</td>
+                    <td><del>{task.work}</del></td>
+                    <td  >{task.time}</td>
+                    <td  >{task.imp}</td>
                     <button className="button" onClick={()=>doneActivity(index)} >Done</button>
                     <button className="button" onClick={()=>deleteActivity(index)} >Delete</button>
                   </tr>
