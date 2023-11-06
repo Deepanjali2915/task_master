@@ -33,14 +33,10 @@ const Input_box=function(){
         setlistData(updatedlistData);
     }
     function doneActivity(index){
-        const donelistData=listData.filter((elem,id) => {
-            return index!=id;
-        })
-        setlistData(donelistData);
-    
-      }
-    
-    
+        const updatedListData = [...listData];
+        updatedListData[index].done = true;
+        setlistData(updatedListData);
+        }    
     return(
       
         <div className="container">
@@ -66,9 +62,9 @@ const Input_box=function(){
               <tbody>
                 {listData.map((task, index) => (
                   <tr key={index}>
-                    <td><del>{task.work}</del></td>
-                    <td  >{task.time}</td>
-                    <td  >{task.imp}</td>
+                    <td className={task.done ? 'strikethrough' : ''} >{task.work}</td>
+                    <td className={task.done ? 'strikethrough' : ''} >{task.time}</td>
+                    <td className={task.done ? 'strikethrough' : ''} >{task.imp}</td>
                     <button className="button" onClick={()=>doneActivity(index)} >Done</button>
                     <button className="button" onClick={()=>deleteActivity(index)} >Delete</button>
                   </tr>

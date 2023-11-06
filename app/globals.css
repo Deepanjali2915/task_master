@@ -76,3 +76,9 @@ body{
       top:-54px;
   }
   
+  
+  
+.strikethrough {
+  text-decoration: line-through;
+}
+  
