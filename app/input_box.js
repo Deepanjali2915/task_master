@@ -1,80 +1,93 @@
-"use client"
 import React, { useState } from 'react';
-import Add_button from './add_button.js'
-import Priority from './priority.js'
-const Input_box=function(){
-     const options = [
-   { label: '1', value: '1' },
-   { label: '2', value: '2' },
-   { label: '3', value: '3' },
- ];
 
+const TodoList = () => {
+  const [work, setWork] = useState('');
+  const [time, setTime] = useState('');
+  const [priority, setPriority] = useState('');
+  const [tasks, setTasks] = useState([]);
+  const [showOnlyPriority, setShowOnlyPriority] = useState('');
 
-
-    const [work, setWork] = useState('');
-    const [time, setTime]= useState('');
-    const [imp,setImp] =useState(0);	
-    const [listData,setlistData] =useState([]);
-    function workTime(){ 
-      
-        setlistData([...listData,{"work":work,"time":time,"imp":imp}])
-            setWork("");
-            setTime("");
-            setImp("");
+  const addTask = () => {
+    if (work && time && priority) {
+      setTasks([...tasks, { work, time, priority, done: false }]);
+      setWork('');
+      setTime('');
+      setPriority('');
     }
-    
-    console.log(listData,"data")
-    
-    function deleteActivity(index){
-        const updatedlistData=listData.filter((elem,id) => {
-            return index!=id;
-        })
-        setlistData(updatedlistData);
-    }
-    function doneActivity(index){
-        const updatedListData = [...listData];
-        updatedListData[index].done = true;
-        setlistData(updatedListData);
-        }    
-    return(
-      
-        <div className="container">
-            <div className="header">Task Master</div>
-                <input type="text" placeholder="Work" value={work} onChange={(e)=>setWork(e.target.value)} /> 
-                
-                <input type="text" placeholder="Take time" value={time} onChange={(e)=>setTime(e.target.value)} />
-                
-                <Priority options={options} value={imp} onChange={(selectedValue) => setImp(selectedValue)} />
+  };
 
+  const toggleDone = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index].done = !updatedTasks[index].done;
+    setTasks(updatedTasks);
+  };
 
-                
-          <div className="header"> 
-                <button onClick={workTime}>Add</button>
-          </div>
-          <p className="List-heading"> </p>  
-            <table className="listData">
-              <thead>
-                <tr>
-                  <th>Work</th>
-                  <th>Time</th>
-                  <th>Priority</th>
-                  <th>All</th>
-                </tr>
-              </thead>
-              <tbody>
-                {listData.map((task, index) => (
-                  <tr key={index}>
-                    <td className={task.done ? 'strikethrough' : ''} >{task.work}</td>
-                    <td className={task.done ? 'strikethrough' : ''} >{task.time}</td>
-                    <td className={task.done ? 'strikethrough' : ''} >{task.imp}</td>
-                    <button className="button" onClick={()=>doneActivity(index)} >Done</button>
-                    <button className="button" onClick={()=>deleteActivity(index)} >Delete</button>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-        </div>
-                
-    );
+  const deleteTask = (index) => {
+    const updatedTasks = tasks.filter((task, i) => i !== index);
+    setTasks(updatedTasks);
+  };
+
+  const filteredTasks = showOnlyPriority
+    ? tasks.filter((task) => task.priority === showOnlyPriority)
+    : tasks;
+
+  return (
+    <div>
+      <h1>Todo List</h1>
+      <div>
+        <input
+          type="text"
+          placeholder="Work"
+          value={work}
+          onChange={(e) => setWork(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Time"
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Priority"
+          value={priority}
+          onChange={(e) => setPriority(e.target.value)}
+        />
+        <button onClick={addTask}>Add</button>
+      </div>
+
+      <div>
+        <label>
+          Filter by Priority:
+          <select
+            value={showOnlyPriority}
+            onChange={(e) => setShowOnlyPriority(e.target.value)}
+          >
+            <option value="">All</option>
+            <option value="1">Priority 1</option>
+            <option value="2">Priority 2</option>
+            <option value="3">Priority 3</option>
+          </select>
+        </label>
+      </div>
+
+      <ul>
+        {filteredTasks.map((task, index) => (
+          <li
+            key={index}
+            className={task.done ? 'strikethrough' : ''}
+          >
+            {task.work} - {task.time} - Priority {task.priority}
+            <button onClick={() => toggleDone(index)}>
+              {task.done ? 'Undone' : 'Done'}
+            </button>
+            <button onClick={() => deleteTask(index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
-export default Input_box;
+
+export default TodoList;
+
