@@ -1,93 +1,96 @@
 import React, { useState } from 'react';
+import Priority from "./priority.js";
 
-const TodoList = () => {
+const Input_box = function () {
+  const options = [
+    { label: '0', value: '0' },
+    { label: '1', value: '1' },
+    { label: '2', value: '2' },
+    { label: '3', value: '3' },
+  ];
+
   const [work, setWork] = useState('');
   const [time, setTime] = useState('');
-  const [priority, setPriority] = useState('');
-  const [tasks, setTasks] = useState([]);
-  const [showOnlyPriority, setShowOnlyPriority] = useState('');
+  const [imp, setImp] = useState('0');
+  const [buttonText, setButtonText] = useState('Done');
+  const [listData, setListData] = useState([]);
+  const [selectedPriority, setSelectedPriority] = useState('0');
 
-  const addTask = () => {
-    if (work && time && priority) {
-      setTasks([...tasks, { work, time, priority, done: false }]);
-      setWork('');
-      setTime('');
-      setPriority('');
-    }
-  };
+  function workTime() {
+    setListData([...listData, { work, time, imp, done: false }]);
+    setWork('');
+    setTime('');
+    setImp('0');
+  }
 
-  const toggleDone = (index) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[index].done = !updatedTasks[index].done;
-    setTasks(updatedTasks);
-  };
+  function deleteActivity(index) {
+    const updatedListData = listData.filter((_, id) => index !== id);
+    setListData(updatedListData);
+  }
 
-  const deleteTask = (index) => {
-    const updatedTasks = tasks.filter((task, i) => i !== index);
-    setTasks(updatedTasks);
-  };
+  function doneActivity(index) {
+    const updatedListData = [...listData];
+    updatedListData[index].done = !updatedListData[index].done;
+    setListData(updatedListData);
+    setButtonText(updatedListData[index].done ? 'Undo' : 'Done');
+  }
 
-  const filteredTasks = showOnlyPriority
-    ? tasks.filter((task) => task.priority === showOnlyPriority)
-    : tasks;
+  const filteredListData = selectedPriority === '0' ? listData : listData.filter((task) => task.imp === selectedPriority);
 
   return (
-    <div>
-      <h1>Todo List</h1>
-      <div>
-        <input
-          type="text"
-          placeholder="Work"
-          value={work}
-          onChange={(e) => setWork(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Priority"
-          value={priority}
-          onChange={(e) => setPriority(e.target.value)}
-        />
-        <button onClick={addTask}>Add</button>
+    <div className="container">
+      <div className="header">Task Master</div>
+      <input type="text" placeholder="Work" value={work} onChange={(e) => setWork(e.target.value)} />
+      <input type="text" placeholder="Take time" value={time} onChange={(e) => setTime(e.target.value)} />
+      <Priority options={options} value={imp} onChange={(selectedValue) => setImp(selectedValue)} />
+      <div className="header">
+        <button onClick={workTime}>Add</button>
       </div>
-
+      <p className="List-heading">Here is your list:</p>
       <div>
         <label>
           Filter by Priority:
           <select
-            value={showOnlyPriority}
-            onChange={(e) => setShowOnlyPriority(e.target.value)}
+            value={selectedPriority}
+            onChange={(e) => setSelectedPriority(e.target.value)}
           >
-            <option value="">All</option>
-            <option value="1">Priority 1</option>
-            <option value="2">Priority 2</option>
-            <option value="3">Priority 3</option>
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </select>
         </label>
       </div>
-
-      <ul>
-        {filteredTasks.map((task, index) => (
-          <li
-            key={index}
-            className={task.done ? 'strikethrough' : ''}
-          >
-            {task.work} - {task.time} - Priority {task.priority}
-            <button onClick={() => toggleDone(index)}>
-              {task.done ? 'Undone' : 'Done'}
-            </button>
-            <button onClick={() => deleteTask(index)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <table className="listData">
+        <thead>
+          <tr>
+            <th>Work</th>
+            <th>Time</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredListData.map((task, index) => (
+            <tr key={index}>
+              <td className={task.done ? 'strikethrough' : ''}>{task.work}</td>
+              <td className={task.done ? 'strikethrough' : ''}>{task.time}</td>
+              <td className={task.done ? 'strikethrough' : ''}>{task.imp}</td>
+              <button className="button" onClick={() => doneActivity(index)}>
+                {buttonText}
+              </button>
+              <button className="button" onClick={() => deleteActivity(index)}>
+                Delete
+              </button>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default TodoList;
+export default Input_box;
 
